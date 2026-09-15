@@ -6,10 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "addresses")
@@ -24,11 +20,11 @@ public class Address {
 
     @NotBlank
     @Size(min = 5, message = "Street Name must be at least 5 characters long!")
-    private String street;
+    private String streetName;
 
     @NotBlank
-    @Size(min = 5, message = "Building Name must be at least 5 characters long!")
-    private String buildingName;
+    @Size(min = 2, message = "Building No must be at least 2 characters long!")
+    private String buildingNo;
 
     @NotBlank
     @Size(min = 4, message = "City Name must be at least 4 characters long!")
@@ -36,7 +32,7 @@ public class Address {
 
     @NotBlank
     @Size(min = 2, message = "State Name must be at least 2 characters long!")
-    private String state;
+    private String province;
 
     @NotBlank
     @Size(min = 2, message = "Country Name must be at least 2 characters long!")
@@ -44,18 +40,18 @@ public class Address {
 
     @NotBlank
     @Size(min = 6, message = "Zip Code must be at least 6 characters long!")
-    private String zipCode;
+    private String postalCode;
 
-    @ManyToMany(mappedBy = "addresses")
-    @ToString.Exclude
-    private List<User> users = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Address(String street, String buildingName, String city, String state, String country, String zipCode) {
-        this.street = street;
-        this.buildingName = buildingName;
+    public Address(String streetName, String buildingNo, String city, String province, String country, String postalCode) {
+        this.streetName = streetName;
+        this.buildingNo = buildingNo;
         this.city = city;
-        this.state = state;
+        this.province = province;
         this.country = country;
-        this.zipCode = zipCode;
+        this.postalCode = postalCode;
     }
 }
